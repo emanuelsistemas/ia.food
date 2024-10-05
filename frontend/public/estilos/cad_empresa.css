@@ -1,0 +1,487 @@
+/* Importação da fonte MuseoModerno do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:wght@500&display=swap');
+
+/* Adicione isso no início do arquivo ou onde for mais apropriado */
+.logo {
+    font-family: 'MuseoModerno', sans-serif; /* Aplicando a fonte MuseoModerno */
+    font-style: normal;
+    font-weight: 500; /* Mudando para bold */
+    color: rgb(255, 255, 255); /* Mudando para branco puro */
+    font-size: 36px; /* Aumentando ainda mais o tamanho da fonte */
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 40px; /* Aumentando o espaço abaixo do logo */    
+    letter-spacing: 2px; /* Adicionando um pequeno espaçamento entre as letras */
+}
+
+.container {
+    background-color: #222;
+    color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 600px; /* Limita a largura máxima do container */
+    width: 100%; /* Faz o container ocupar 100% da largura disponível até o max-width */
+}
+
+h1 {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    color: #fff;
+}
+
+select {
+    background-color: #1D1D1D;
+    color: rgb(237, 237, 237);
+    border: 2px solid #595959;
+    border-radius: 4px;
+    padding: 16px 16px;
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23BBBBBB' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    font-size: 16px;
+    font-weight: 400;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    height: 56px;
+    text-align: left; /* Alinhado à esquerda */
+}
+
+select:focus {
+    outline: none;
+    border-color: #4D4D4D;
+    background-color: #1D1D1D;
+}
+
+/* Estilo para as opções do select */
+select option {
+    background-color: #424242;
+    color: rgb(237, 237, 237);
+    padding: 12px 16px;
+    font-family: Inter, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+/* Estilo para hover nas opções */
+select option:hover,
+select option:focus {
+    background-color: #383838;
+    cursor: pointer;
+}
+
+/* Estilo para a opção selecionada */
+select option:checked {
+    background-color: #383838;
+    color: rgb(237, 237, 237);
+    /* Removemos qualquer estilo adicional que possa afetar as proporções */
+}
+
+/* Removemos estilos específicos para a primeira opção */
+select option:first-child {
+    background-color: #424242;
+    color: rgb(237, 237, 237);
+}
+
+/* Adiciona o cursor de seleção ao passar o mouse sobre o select */
+select:hover {
+    border-color: #4D4D4D;
+    cursor: pointer;
+}
+
+textarea {
+    background-color: #383838;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 16px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    resize: vertical;
+    min-height: 120px;
+}
+
+textarea:focus {
+    outline: none;
+    background-color: #3D3D3D;
+}
+
+.anexo-label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.anexo-label:hover {
+    background-color: #555;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+small {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+}
+
+.submit-btn {
+    background-color: #D50B2D;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #A80923;
+}
+
+body {
+    background-color: #141414;
+    color: #ffffff;
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Remove margens padrão */
+    padding: 20px; /* Adiciona um pouco de padding para evitar que o conteúdo toque as bordas em telas menores */
+}
+
+/* Estilo para o placeholder */
+select:invalid,
+textarea::placeholder {
+    color: #999999;
+}
+
+/* Adicione este estilo no final do arquivo */
+.form-group + .form-group {
+    margin-top: 30px; /* Aumenta o espaçamento entre grupos de formulário */
+}
+
+/* Estilização das opções do select */
+#projeto option {
+    background-color: #424242;
+    color: white; /* Para garantir que o texto seja legível no fundo escuro */
+    border: none; /* Remove a borda das opções */
+    outline: none; /* Remove o outline que pode aparecer em alguns navegadores */
+}
+
+/* Estilo específico para o Firefox */
+#projeto option:not(:checked) {
+    box-shadow: none; /* Remove o efeito de borda no Firefox */
+}
+
+/* Mantenha a cor de fundo padrão para a opção selecionada/desabilitada */
+#projeto option:first-child {
+    background-color: #424242;
+    color: rgb(237, 237, 237);
+}
+
+/* ... código existente ... */
+
+.select-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.floating-label {
+    position: absolute;
+    left: 16px; /* Alinhado à esquerda */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-family: Inter, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgb(237, 237, 237);
+    padding: 0 4px;
+    background-color: transparent;
+    text-align: left; /* Alinhado à esquerda */
+}
+
+.floating-label.active {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+    background-color: #222;
+    padding: 0 4px;
+    left: 16px; /* Ajusta a posição quando ativo */
+    right: auto; /* Remove o right quando ativo */
+    text-align: left; /* Alinha à esquerda quando ativo */
+}
+
+select:focus + .floating-label,
+select:not([value=""]):valid + .floating-label {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+    background-color: #222;
+    padding: 0 4px;
+    font-size: 14px;
+    left: 16px;
+    text-align: left;
+}
+
+/* Removemos o ajuste para o texto selecionado, pois agora sempre será alinhado à esquerda */
+
+/* ... resto do código ... */
+
+.select-search-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #1D1D1D;
+    border: 2px solid #595959;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.select-search {
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background-color: #383838;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.select-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.select-options li {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.select-options li:hover {
+    background-color: #383838;
+}
+
+/* ... resto do código ... */
+
+/* Estilos atualizados para o grupo de botões de rádio */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.radio-label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: rgb(237, 237, 237);
+}
+
+.radio-options {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.radio-option {
+    flex: 1;
+    position: relative;
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-option .radio-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #222;
+    border: 2px solid #595959;
+    border-radius: 4px;
+    color: rgb(237, 237, 237);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.radio-option input[type="radio"]:checked + .radio-text {
+    border-color: #D50B2D;
+    color: #ffffff;
+}
+
+.radio-option input[type="radio"]:checked + .radio-text::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 20px;
+    height: 20px;
+    background-color: #D50B2D;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.radio-option input[type="radio"]:checked + .radio-text::after {
+    content: '✓';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio-option:hover .radio-text {
+    border-color: #D50B2D;
+}
+
+/* ... (resto do código permanece o mesmo) ... */
+
+/* Estilos para os novos inputs */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px;
+    background-color: #1D1D1D;
+    border: 2px solid #595959;
+    border-radius: 4px;
+    color: rgb(237, 237, 237);
+    font-size: 16px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4D4D4D;
+}
+
+.form-group .floating-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    color: rgb(237, 237, 237);
+    font-size: 16px;
+    background-color: transparent;
+    padding: 0 4px;
+}
+
+.form-group input:focus + .floating-label,
+.form-group input:not(:placeholder-shown) + .floating-label {
+    top: 0;
+    font-size: 12px;
+    background-color: #222;
+    transform: translateY(-50%) scale(0.9);
+}
+
+/* Adicione um placeholder transparente para todos os inputs */
+.form-group input::placeholder {
+    color: transparent;
+}
+
+/* ... resto do código ... */
+
+.input-group {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.search-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #BBBBBB; /* Cor do ícone */
+    transition: color 0.3s ease;
+}
+
+.search-icon:hover svg {
+    color: #D50B2D; /* Cor do ícone ao passar o mouse */
+}
+
+/* ... resto dos estilos ... */
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-svg.rotate {
+    animation: rotate 1s linear infinite;
+}
+
+/* ... (resto dos estilos) ... */
+
+.error-message {
+    color: #D50B2D;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-group input.error {
+    border-color: #D50B2D;
+}
+
+/* ... (estilos existentes) ... */
+
+.required-asterisk {
+    color: #D50B2D;
+    margin-left: 4px;
+}
+
+/* ... (resto dos estilos) ... */

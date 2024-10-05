@@ -1,0 +1,39 @@
+.input-container, .select-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.custom-input, .custom-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    top: 10px;
+    transition: 0.2s ease all;
+    color: #999;
+}
+
+.custom-input:focus ~ .floating-label,
+.custom-input:not(:placeholder-shown) ~ .floating-label,
+.custom-select:focus ~ .floating-label,
+.custom-select:not([value=""]):valid ~ .floating-label,
+.floating-label.active {
+    top: -20px;
+    font-size: 14px;
+    color: #007bff;
+    background-color: #fff;
+    padding: 0 5px;
+}
+
+.custom-input:focus,
+.custom-select:focus {
+    outline: none;
+    border-color: #007bff;
+}
