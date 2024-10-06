@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414; /* Alterado de #1e1e1e para #141414 */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alterado de center para flex-start */
+    align-items: center;
+    min-height: 100vh;
+}
+
+.logo {
+    font-family: 'MuseoModerno', cursive;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 400;
+    margin-top: 1rem; /* Adicionado para igualar o espaço acima e abaixo do logo */
+    margin-bottom: 1rem;
+}
+
+.container {
+    background-color: #262626; /* Alterado de #2d2d2d para #262626 */
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-title {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #595959; /* Alterado de #ffffff para #595959 */
+    background-color: #212121; /* Alterado de #262626 para #212121 */
+    color: #ffffff;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+/* Estilo para as opções internas do select */
+select option {
+    background-color: #383838;
+    color: #ffffff;
+}
+
+/* Novo estilo para a opção placeholder do select */
+select option[value=""][disabled] {
+    color: #8A8A8A;
+}
+
+/* Estilo para o texto do placeholder quando nenhuma opção está selecionada */
+select:invalid {
+    color: #8A8A8A;
+}
