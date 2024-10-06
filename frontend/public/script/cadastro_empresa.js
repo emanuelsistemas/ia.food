@@ -35,4 +35,26 @@ document.addEventListener('DOMContentLoaded', function() {
             subcategorySelect.appendChild(optionElement);
         });
     }
+
+    const select = document.getElementById('subcategory');
+    let isOpen = false;
+
+    select.addEventListener('mousedown', function() {
+        isOpen = !isOpen;
+        if (isOpen) {
+            this.classList.add('options-visible');
+        } else {
+            this.classList.remove('options-visible');
+        }
+    });
+
+    select.addEventListener('blur', function() {
+        isOpen = false;
+        this.classList.remove('options-visible');
+    });
+
+    select.addEventListener('change', function() {
+        isOpen = false;
+        this.classList.remove('options-visible');
+    });
 });
