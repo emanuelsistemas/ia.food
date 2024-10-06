@@ -135,24 +135,24 @@ body {
 
 .arrow::before {
     left: -5px;
-    transform: rotate(45deg);
+    transform: rotate(-45deg); /* Alterado de 45deg para -45deg */
     background-color: #ffffff;
 }
 
 .arrow::after {
     left: 5px;
-    transform: rotate(-45deg);
+    transform: rotate(45deg); /* Alterado de -45deg para 45deg */
     background-color: #ffffff;
 }
 
 .open .arrow::before {
     left: -5px;
-    transform: rotate(-45deg);
+    transform: rotate(45deg); /* Alterado de -45deg para 45deg */
 }
 
 .open .arrow::after {
     left: 5px;
-    transform: rotate(45deg);
+    transform: rotate(-45deg); /* Alterado de 45deg para -45deg */
 }
 
 .custom-select.open {
