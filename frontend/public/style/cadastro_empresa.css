@@ -41,89 +41,120 @@ body {
     position: relative;
 }
 
-.select-wrapper {
+.custom-select-wrapper {
     position: relative;
+    user-select: none;
+    width: 100%;
 }
 
-select {
-    width: 100%;
-    height: 46.179px; /* Altura ajustada conforme solicitado */
-    padding: 0.5rem;
-    padding-right: 30px; /* Espaço para a seta */
-    border: 1px solid #595959; /* Alterado de #ffffff para #595959 */
-    background-color: #212121; /* Alterado de #262626 para #212121 */
-    color: #ffffff;
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #595959;
     border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    /* Adicionado para garantir que o conteúdo fique centralizado verticalmente */
+}
+
+.custom-select__trigger {
+    position: relative;
     display: flex;
     align-items: center;
-    transition: border-color 0.3s ease; /* Adicionado para suavizar a transição da cor da borda */
-    appearance: none; /* Remove a seta padrão */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    cursor: pointer; /* Adicionado cursor pointer para o select */
-}
-
-/* Removemos o estilo :focus e adicionamos uma nova classe */
-.select-wrapper select.options-visible {
-    border-color: red;
-    outline: none;
-}
-
-/* Garantimos que a borda volte para #595959 quando não estiver com options-visible */
-.select-wrapper select:not(.options-visible) {
-    border-color: #595959;
-}
-
-/* Estilo para as opções internas do select */
-select option {
-    background-color: #383838;
+    justify-content: space-between;
+    padding: 0 22px;
+    font-size: 16px;
+    font-weight: 400;
     color: #ffffff;
-    cursor: pointer; /* Adicionado cursor pointer para as opções */
-    padding: 10px; /* Adicionado padding para criar espaçamento */
-    border-bottom: 1px solid #424242; /* Adicionada borda inferior para separar as opções */
+    height: 46.179px;
+    line-height: 46.179px;
+    background: #212121;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-select option:last-child {
-    border-bottom: none; /* Remove a borda do último item */
-}
-
-/* Novo estilo para o hover das opções */
-select option:hover,
-select option:focus {
-    background-color: #424242 !important;
-}
-
-/* Estilo para a opção placeholder do select */
-select option[value=""][disabled] {
-    color: #8A8A8A;
-}
-
-/* Estilo para o texto do placeholder quando nenhuma opção está selecionada */
-select:invalid {
-    color: #8A8A8A;
-}
-
-.select-arrow {
+.custom-options {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #ffffff;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #595959;
+    border-top: 0;
+    background: #383838;
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: transform 0.3s ease;
+    z-index: 2;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
-/* Atualizamos a regra para a rotação da seta */
-.select-wrapper select.options-visible + .select-arrow {
-    transform: translateY(-50%) rotate(180deg);
+.custom-select.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.custom-option {
+    position: relative;
+    display: block;
+    padding: 0 22px 0 22px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 46.179px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.custom-option:hover {
+    cursor: pointer;
+    background-color: #424242;
+}
+
+.custom-option.selected {
+    color: #8A8A8A;
+    background-color: #212121;
+}
+
+.arrow {
+    position: relative;
+    height: 15px;
+    width: 15px;
+}
+
+.arrow::before,
+.arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    transition: all 0.5s;
+}
+
+.arrow::before {
+    left: -5px;
+    transform: rotate(45deg);
+    background-color: #ffffff;
+}
+
+.arrow::after {
+    left: 5px;
+    transform: rotate(-45deg);
+    background-color: #ffffff;
+}
+
+.open .arrow::before {
+    left: -5px;
+    transform: rotate(-45deg);
+}
+
+.open .arrow::after {
+    left: 5px;
+    transform: rotate(45deg);
+}
+
+.custom-select.open {
+    border-color: red;
 }
