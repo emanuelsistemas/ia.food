@@ -9,6 +9,7 @@ body {
     justify-content: flex-start; /* Alterado de center para flex-start */
     align-items: center;
     min-height: 100vh;
+    padding-bottom: 2rem; /* Adiciona padding na parte inferior do body */
 }
 
 .logo {
@@ -26,6 +27,7 @@ body {
     border-radius: 8px;
     width: 100%;
     max-width: 600px;
+    margin-bottom: 2rem; /* Adiciona espaço abaixo do container */
 }
 
 .form-title {
