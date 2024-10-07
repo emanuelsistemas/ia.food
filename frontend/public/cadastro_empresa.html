@@ -50,8 +50,94 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group radio-group">
+                <label class="radio-group-label">Tipo de Documento</label>
+                <div class="radio-buttons">
+                    <label class="radio-button">
+                        <input type="radio" name="documento" value="cnpj" checked>
+                        <span class="radio-button-text">CNPJ</span>
+                    </label>
+                    <label class="radio-button">
+                        <input type="radio" name="documento" value="cpf">
+                        <span class="radio-button-text">CPF</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Novos campos de input com estrutura semelhante ao select -->
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="text" id="cnpj" name="cnpj" required>
+                    <span class="input-text"></span>
+                    <button type="button" class="cnpj-search-button">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <div class="loading-spinner"></div>
+                    </button>
+                </div>
+                <label for="cnpj" class="floating-label">CNPJ</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="text" id="cpf" name="cpf" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="cpf" class="floating-label">CPF</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="text" id="razao_social" name="razao_social" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="razao_social" class="floating-label">Razão Social</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="nome_fantasia" class="floating-label">Nome Fantasia</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="tel" id="telefone" name="telefone" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="telefone" class="floating-label">Telefone</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="email" class="floating-label">Email</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="text" id="nome_usuario" name="nome_usuario" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="nome_usuario" class="floating-label">Nome de Usuário</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="password" id="senha" name="senha" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="senha" class="floating-label">Senha</label>
+            </div>
+            <div class="form-group floating-input">
+                <div class="input-wrapper">
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" required>
+                    <span class="input-text"></span>
+                </div>
+                <label for="confirmar_senha" class="floating-label">Confirmar Senha</label>
+            </div>
         </form>
     </div>
+    <script src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js"></script>
     <script src="script/cadastro_empresa.js"></script>
 </body>
 </html>

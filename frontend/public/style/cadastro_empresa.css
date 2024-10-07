@@ -206,3 +206,195 @@ body {
 .custom-select.open {
     border-color: red;
 }
+
+.radio-group {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.radio-group-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.radio-buttons {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.radio-button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    flex: 1;
+}
+
+.radio-button input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-button-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    background-color: transparent;
+    border: 1px solid #FF0000;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.radio-button input:checked + .radio-button-text {
+    background-color: #FF0000;
+    color: #ffffff;
+}
+
+.radio-button:hover .radio-button-text {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.floating-input {
+    position: relative;
+    margin-bottom: 20px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+}
+
+.floating-input.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #595959;
+    border-radius: 4px;
+    background-color: #262626;
+    transition: all 0.3s ease;
+}
+
+.floating-input input {
+    width: 100%;
+    padding: 20px 15px 10px;
+    border: none;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-text {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8A8A8A;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+.floating-input label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #8A8A8A;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    z-index: 1;
+}
+
+.floating-input input:focus ~ label,
+.floating-input input:not(:placeholder-shown) ~ label,
+.floating-input.filled label {
+    top: 8px;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.floating-input.focused label {
+    top: 8px;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+.floating-input input:focus ~ .input-wrapper,
+.floating-input .input-wrapper:focus-within {
+    border-color: #FF0000;
+}
+
+/* Remova ou comente esta regra */
+/* .floating-input.filled .input-wrapper {
+    border-color: #FF0000;
+} */
+
+.floating-input input:focus {
+    border-color: #FF0000;
+    outline: none;
+}
+
+.cnpj-search-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: #8A8A8A;
+    transition: color 0.3s ease;
+}
+
+.cnpj-search-button:hover .search-icon {
+    color: #FF0000;
+}
+
+.loading-spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #8A8A8A;
+    border-top: 2px solid #FF0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.cnpj-search-button.loading .search-icon {
+    display: none;
+}
+
+.cnpj-search-button.loading .loading-spinner {
+    display: block;
+}
