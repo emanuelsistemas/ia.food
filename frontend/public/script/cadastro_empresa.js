@@ -14,15 +14,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const telefoneInput = document.getElementById('telefone');
     const cnpjSearchButton = document.querySelector('.cnpj-search-button');
     const floatingInputs = document.querySelectorAll('.floating-input input');
+    const form = document.getElementById('supportForm');
 
     function updateSelectState() {
         const span = selectTrigger.querySelector('span');
         if (span && span.textContent !== "") {
             select.classList.add('filled');
             floatingLabel.classList.add('active');
+            // Garantir que o asterisco seja mantido
+            if (!floatingLabel.querySelector('.required')) {
+                const asterisk = document.createElement('span');
+                asterisk.className = 'required';
+                asterisk.textContent = '*';
+                floatingLabel.appendChild(asterisk);
+            }
         } else {
             select.classList.remove('filled');
             floatingLabel.classList.remove('active');
+            // Restaurar o texto original com o asterisco
+            floatingLabel.innerHTML = 'Selecione seu segmento<span class="required">*</span>';
         }
     }
 
@@ -116,7 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Controle do efeito floating label para inputs
     function updateFloatingLabel(inputContainer, isFocused = false) {
         const input = inputContainer.querySelector('input');
+        const label = inputContainer.querySelector('.floating-label');
         inputContainer.classList.toggle('filled', input.value !== '' || isFocused);
+        
+        // Ajustar o texto do label quando estiver focado ou preenchido
+        if (input.id === 'senha' || input.id === 'confirmar_senha') {
+            if (input.value !== '' || isFocused) {
+                label.textContent = input.id === 'senha' ? 'Senha (máximo 5 dígitos)' : 'Confirmar Senha (máximo 5 dígitos)';
+            } else {
+                label.textContent = input.id === 'senha' ? 'Senha' : 'Confirmar Senha';
+            }
+        }
     }
 
     floatingInputs.forEach(input => {
@@ -140,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateFloatingLabel(input.closest('.floating-input'));
     });
 
-    // Aplicar máscaras para CNPJ e CPF
+    // Aplicar máscaras para CNPJ, CPF e telefone
     function applyMask() {
         const documentType = document.querySelector('input[name="documento"]:checked').value;
         if (documentType === 'cnpj') {
@@ -150,9 +170,11 @@ document.addEventListener('DOMContentLoaded', function() {
             VMasker(cpfInput).maskPattern('999.999.999-99');
             cpfInput.setAttribute('maxlength', '14');
         }
-    }
 
-    VMasker(telefoneInput).maskPattern('(99) 99999-9999');
+        // Nova máscara para o telefone
+        VMasker(telefoneInput).maskPattern('(99) 9 9999-9999');
+        telefoneInput.setAttribute('maxlength', '16');
+    }
 
     // Funcionalidade de busca de CNPJ
     cnpjSearchButton.addEventListener('click', searchCNPJ);
@@ -179,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const telefone = (data.estabelecimento.ddd1 || '') + (data.estabelecimento.telefone1 || '');
             telefoneInput.value = telefone;
-            VMasker(telefoneInput).maskPattern('(99) 99999-9999');
+            VMasker(telefoneInput).maskPattern('(99) 9 9999-9999');
             
             document.getElementById('email').value = data.estabelecimento.email || '';
 
@@ -201,4 +223,177 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleFields();
     applyMask();
     updateFloatingLabels();
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Previne o envio padrão do formulário
+
+        if (validateForm()) {
+            // Se todos os campos estiverem preenchidos, você pode enviar o formulário
+            console.log('Formulário válido, enviando...');
+            // Aqui você pode adicionar o código para enviar o formulário
+        }
+    });
+
+    function validateForm() {
+        let isValid = true;
+        const requiredInputs = form.querySelectorAll('input[required]');
+
+        requiredInputs.forEach(input => {
+            if (input.value.trim() === '') {
+                isValid = false;
+                showError(input, 'Este campo é obrigatório');
+            } else {
+                clearError(input);
+            }
+        });
+
+        // Validação específica para o select
+        const selectTrigger = document.querySelector('.custom-select__trigger span');
+        if (selectTrigger.textContent.trim() === '') {
+            isValid = false;
+            showError(selectTrigger.closest('.custom-select-wrapper'), 'Por favor, selecione um segmento');
+        } else {
+            clearError(selectTrigger.closest('.custom-select-wrapper'));
+        }
+
+        return isValid;
+    }
+
+    function showError(element, message) {
+        const errorElement = element.closest('.form-group').querySelector('.error-message');
+        if (errorElement) {
+            errorElement.textContent = message;
+        } else {
+            const newErrorElement = document.createElement('div');
+            newErrorElement.className = 'error-message';
+            newErrorElement.textContent = message;
+            element.closest('.form-group').appendChild(newErrorElement);
+        }
+    }
+
+    function clearError(element) {
+        const errorElement = element.closest('.form-group').querySelector('.error-message');
+        if (errorElement) {
+            errorElement.textContent = '';
+        }
+    }
+
+    // Modificar a função addRequiredAsterisks para incluir o select
+    function addRequiredAsterisks() {
+        const requiredInputs = form.querySelectorAll('input[required], select[required]');
+        requiredInputs.forEach(input => {
+            const label = input.closest('.form-group').querySelector('.floating-label');
+            if (label && !label.querySelector('.required')) {
+                const asterisk = document.createElement('span');
+                asterisk.className = 'required';
+                asterisk.textContent = '*';
+                label.appendChild(asterisk);
+            }
+        });
+
+        // Adicionar asterisco ao select se ainda não estiver presente
+        const selectLabel = document.querySelector('.custom-select-wrapper .floating-label');
+        if (selectLabel && !selectLabel.querySelector('.required')) {
+            const asterisk = document.createElement('span');
+            asterisk.className = 'required';
+            asterisk.textContent = '*';
+            selectLabel.appendChild(asterisk);
+        }
+    }
+
+    // Chamar a função para adicionar os asteriscos
+    addRequiredAsterisks();
+});
+
+const senhaInput = document.getElementById('senha');
+const confirmarSenhaInput = document.getElementById('confirmar_senha');
+const senhaLabel = senhaInput.closest('.floating-input').querySelector('.floating-label');
+const confirmarSenhaLabel = confirmarSenhaInput.closest('.floating-input').querySelector('.floating-label');
+const senhaError = document.createElement('div');
+senhaError.className = 'error-message';
+confirmarSenhaInput.parentNode.appendChild(senhaError);
+
+let senhaValue = '';
+let confirmarSenhaValue = '';
+let ambosPreenchidos = false;
+
+function validatePassword() {
+    if (ambosPreenchidos) {
+        if (senhaValue === confirmarSenhaValue) {
+            senhaError.textContent = '';
+            confirmarSenhaInput.setCustomValidity('');
+        } else {
+            senhaError.textContent = 'As senhas não coincidem.';
+            confirmarSenhaInput.setCustomValidity('As senhas não coincidem.');
+        }
+    } else {
+        senhaError.textContent = '';
+        confirmarSenhaInput.setCustomValidity('');
+    }
+}
+
+function checkBothFilled() {
+    ambosPreenchidos = senhaValue !== '' && confirmarSenhaValue !== '';
+}
+
+function applyNumericMask(input) {
+    input.addEventListener('input', function(e) {
+        let value = e.target.value;
+        value = value.replace(/\D/g, ''); // Remove todos os não-dígitos
+        value = value.slice(0, 5); // Limita a 5 dígitos
+        
+        // Armazena a posição do cursor
+        const cursorPosition = this.selectionStart;
+        
+        // Atualiza o valor do input
+        this.value = value;
+        
+        // Restaura a posição do cursor
+        this.setSelectionRange(cursorPosition, cursorPosition);
+    });
+}
+
+applyNumericMask(senhaInput);
+applyNumericMask(confirmarSenhaInput);
+
+senhaInput.addEventListener('blur', function() {
+    senhaValue = this.value;
+    checkBothFilled();
+    validatePassword();
+});
+
+confirmarSenhaInput.addEventListener('blur', function() {
+    confirmarSenhaValue = this.value;
+    checkBothFilled();
+    validatePassword();
+});
+
+// Atualizar os atributos dos campos de senha
+senhaInput.setAttribute('type', 'password');
+senhaInput.setAttribute('maxlength', '5');
+senhaInput.setAttribute('inputmode', 'numeric');
+senhaInput.setAttribute('pattern', '[0-9]{5}');
+
+confirmarSenhaInput.setAttribute('type', 'password');
+confirmarSenhaInput.setAttribute('maxlength', '5');
+confirmarSenhaInput.setAttribute('inputmode', 'numeric');
+confirmarSenhaInput.setAttribute('pattern', '[0-9]{5}');
+
+// Funcionalidade para mostrar/ocultar senha
+const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+togglePasswordButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const input = this.previousElementSibling.previousElementSibling;
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        
+        // Altera o ícone do olho
+        const eyeIcon = this.querySelector('.eye-icon');
+        if (type === 'password') {
+            eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        } else {
+            eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+        }
+    });
 });
