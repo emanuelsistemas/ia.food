@@ -8,19 +8,57 @@ bp = Blueprint('empresa', __name__)
 @bp.route('/cadastrar', methods=['POST'])
 def cadastrar_empresa():
     data = request.json
-    print("Dados recebidos:", data)  # Para debug
+    nova_empresa = Empresa(
+        nome=data['nome'],
+        cnpj=data['cnpj'],
+        email=data['email'],
+        telefone=data['telefone'],
+        senha=generate_password_hash(data['senha'])
+    )
+    db.session.add(nova_empresa)
+    db.session.commit()
+    return jsonify({"message": "Empresa cadastrada com sucesso", "id": nova_empresa.id}), 201
 
-    # Aqui você deve implementar a lógica para salvar os dados no banco de dados
-    # Por enquanto, vamos apenas retornar uma resposta de sucesso
+@bp.route('/<int:id>', methods=['GET'])
+def obter_empresa(id):
+    empresa = Empresa.query.get_or_404(id)
+    return jsonify({
+        "id": empresa.id,
+        "nome": empresa.nome,
+        "cnpj": empresa.cnpj,
+        "email": empresa.email,
+        "telefone": empresa.telefone
+    })
 
-    return jsonify({"message": "Empresa cadastrada com sucesso"}), 201
-
-@bp.route('/cadastro-empresa', methods=['POST'])
-def cadastro_empresa():
-    # Lógica para cadastrar empresa
+@bp.route('/<int:id>', methods=['PUT'])
+def atualizar_empresa(id):
+    empresa = Empresa.query.get_or_404(id)
     data = request.json
-    print("Dados recebidos:", data)  # Para debug
-    # Processe os dados e salve no banco de dados
-    return jsonify({"message": "Empresa cadastrada com sucesso"}), 201
+    empresa.nome = data.get('nome', empresa.nome)
+    empresa.cnpj = data.get('cnpj', empresa.cnpj)
+    empresa.email = data.get('email', empresa.email)
+    empresa.telefone = data.get('telefone', empresa.telefone)
+    if 'senha' in data:
+        empresa.senha = generate_password_hash(data['senha'])
+    db.session.commit()
+    return jsonify({"message": "Empresa atualizada com sucesso"})
+
+@bp.route('/<int:id>', methods=['DELETE'])
+def deletar_empresa(id):
+    empresa = Empresa.query.get_or_404(id)
+    db.session.delete(empresa)
+    db.session.commit()
+    return jsonify({"message": "Empresa deletada com sucesso"})
+
+@bp.route('/', methods=['GET'])
+def listar_empresas():
+    empresas = Empresa.query.all()
+    return jsonify([{
+        "id": e.id,
+        "nome": e.nome,
+        "cnpj": e.cnpj,
+        "email": e.email,
+        "telefone": e.telefone
+    } for e in empresas])
 
 # Adicione outras rotas relacionadas à empresa aqui, se necessário

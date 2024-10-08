@@ -11,7 +11,7 @@
     <h1 class="logo">aifüd</h1>
     <div class="container">
         <h2 class="form-title">Cadastro de empresa</h2>
-        <form id="supportForm">
+        <form id="cadastroEmpresaForm">
             <div class="form-group custom-select-wrapper">
                 <div class="custom-select">
                     <label for="segmento" class="floating-label">Selecione seu segmento<span class="required">*</span></label>
@@ -154,5 +154,40 @@
     </div>
     <script src="https://unpkg.com/vanilla-masker@1.1.1/lib/vanilla-masker.js"></script>
     <script src="script/cadastro_empresa.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#cadastroEmpresaForm').submit(function(e) {
+            e.preventDefault();
+            
+            var formData = {
+                segmento: $('#segmento').val(),
+                documento: $('input[name="documento"]:checked').val(),
+                cnpj: $('#cnpj').val(),
+                cpf: $('#cpf').val(),
+                razao_social: $('#razao_social').val(),
+                nome_fantasia: $('#nome_fantasia').val(),
+                telefone: $('#telefone').val(),
+                email: $('#email').val(),
+                nome_usuario: $('#nome_usuario').val(),
+                senha: $('#senha').val()
+            };
+
+            $.ajax({
+                url: '/api/empresa/cadastrar',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    alert('Empresa cadastrada com sucesso!');
+                    // Limpar formulário ou redirecionar
+                },
+                error: function(xhr, status, error) {
+                    alert('Erro ao cadastrar empresa: ' + error);
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

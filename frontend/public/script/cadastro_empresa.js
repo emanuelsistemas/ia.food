@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('cadastroEmpresaForm');
+    if (form) {
+        initializeCustomSelect();
+        setupFormValidation();
+        setupPasswordToggle();
+        setupInputMasks();
+        setupCNPJSearch();
+    } else {
+        console.error('Formulário de cadastro não encontrado');
+    }
+});
+
+function initializeCustomSelect() {
     const select = document.querySelector('.custom-select');
     const selectTrigger = select.querySelector('.custom-select__trigger');
     const options = select.querySelectorAll('.custom-option');
@@ -14,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const telefoneInput = document.getElementById('telefone');
     const cnpjSearchButton = document.querySelector('.cnpj-search-button');
     const floatingInputs = document.querySelectorAll('.floating-input input');
-    const form = document.getElementById('supportForm');
 
     function updateSelectState() {
         const span = selectTrigger.querySelector('span');
@@ -224,86 +236,143 @@ document.addEventListener('DOMContentLoaded', function() {
     applyMask();
     updateFloatingLabels();
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Previne o envio padrão do formulário
+    // Adicionar esta linha no final da função
+    updateRequiredFields();
+}
 
-        if (validateForm()) {
-            // Se todos os campos estiverem preenchidos, você pode enviar o formulário
-            console.log('Formulário válido, enviando...');
-            // Aqui você pode adicionar o código para enviar o formulário
+function setupFormValidation() {
+    const form = document.getElementById('cadastroEmpresaForm');
+    const radioButtons = document.querySelectorAll('input[name="documento"]');
+    
+    if (form) {
+        // Adicionar evento de mudança para os radio buttons
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', updateRequiredFields);
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                submitForm();
+            }
+        });
+    }
+
+    // Chamar a função inicialmente para configurar os campos corretamente
+    updateRequiredFields();
+}
+
+function updateRequiredFields() {
+    const documentType = document.querySelector('input[name="documento"]:checked').value;
+    const cnpjField = document.getElementById('cnpj');
+    const cpfField = document.getElementById('cpf');
+    const razaoSocialField = document.getElementById('razao_social');
+
+    if (documentType === 'cnpj') {
+        cnpjField.required = true;
+        cpfField.required = false;
+        razaoSocialField.required = true;
+        cnpjField.closest('.form-group').classList.remove('hidden');
+        cpfField.closest('.form-group').classList.add('hidden');
+        razaoSocialField.closest('.form-group').classList.remove('hidden');
+    } else {
+        cnpjField.required = false;
+        cpfField.required = true;
+        razaoSocialField.required = false;
+        cnpjField.closest('.form-group').classList.add('hidden');
+        cpfField.closest('.form-group').classList.remove('hidden');
+        razaoSocialField.closest('.form-group').classList.add('hidden');
+    }
+
+    // Atualizar os asteriscos de campos obrigatórios
+    updateRequiredAsterisks();
+}
+
+function validateForm() {
+    let isValid = true;
+    const form = document.getElementById('cadastroEmpresaForm');
+    const requiredInputs = form.querySelectorAll('input[required]:not([type="radio"]):not(.hidden)');
+
+    requiredInputs.forEach(input => {
+        if (input.value.trim() === '') {
+            isValid = false;
+            showError(input, 'Este campo é obrigatório');
+        } else {
+            clearError(input);
         }
     });
 
-    function validateForm() {
-        let isValid = true;
-        const requiredInputs = form.querySelectorAll('input[required]');
+    // Validação específica para o select
+    const selectTrigger = document.querySelector('.custom-select__trigger span');
+    if (selectTrigger.textContent.trim() === '') {
+        isValid = false;
+        showError(selectTrigger.closest('.custom-select-wrapper'), 'Por favor, selecione um segmento');
+    } else {
+        clearError(selectTrigger.closest('.custom-select-wrapper'));
+    }
 
-        requiredInputs.forEach(input => {
-            if (input.value.trim() === '') {
-                isValid = false;
-                showError(input, 'Este campo é obrigatório');
+    return isValid;
+}
+
+function showError(element, message) {
+    const errorElement = element.closest('.form-group').querySelector('.error-message');
+    if (errorElement) {
+        errorElement.textContent = message;
+    } else {
+        const newErrorElement = document.createElement('div');
+        newErrorElement.className = 'error-message';
+        newErrorElement.textContent = message;
+        element.closest('.form-group').appendChild(newErrorElement);
+    }
+}
+
+function clearError(element) {
+    const errorElement = element.closest('.form-group').querySelector('.error-message');
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
+}
+
+function updateRequiredAsterisks() {
+    const form = document.getElementById('cadastroEmpresaForm');
+    const allInputs = form.querySelectorAll('input:not([type="radio"])');
+    
+    allInputs.forEach(input => {
+        const label = input.closest('.form-group').querySelector('.floating-label');
+        const asterisk = label.querySelector('.required');
+        
+        if (input.required && !input.closest('.form-group').classList.contains('hidden')) {
+            if (!asterisk) {
+                const newAsterisk = document.createElement('span');
+                newAsterisk.className = 'required';
+                newAsterisk.textContent = '*';
+                label.appendChild(newAsterisk);
+            }
+        } else if (asterisk) {
+            asterisk.remove();
+        }
+    });
+}
+
+function setupPasswordToggle() {
+    const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+    togglePasswordButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.previousElementSibling.previousElementSibling;
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            
+            // Altera o ícone do olho
+            const eyeIcon = this.querySelector('.eye-icon');
+            if (type === 'password') {
+                eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
             } else {
-                clearError(input);
+                eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
             }
         });
-
-        // Validação específica para o select
-        const selectTrigger = document.querySelector('.custom-select__trigger span');
-        if (selectTrigger.textContent.trim() === '') {
-            isValid = false;
-            showError(selectTrigger.closest('.custom-select-wrapper'), 'Por favor, selecione um segmento');
-        } else {
-            clearError(selectTrigger.closest('.custom-select-wrapper'));
-        }
-
-        return isValid;
-    }
-
-    function showError(element, message) {
-        const errorElement = element.closest('.form-group').querySelector('.error-message');
-        if (errorElement) {
-            errorElement.textContent = message;
-        } else {
-            const newErrorElement = document.createElement('div');
-            newErrorElement.className = 'error-message';
-            newErrorElement.textContent = message;
-            element.closest('.form-group').appendChild(newErrorElement);
-        }
-    }
-
-    function clearError(element) {
-        const errorElement = element.closest('.form-group').querySelector('.error-message');
-        if (errorElement) {
-            errorElement.textContent = '';
-        }
-    }
-
-    // Modificar a função addRequiredAsterisks para incluir o select
-    function addRequiredAsterisks() {
-        const requiredInputs = form.querySelectorAll('input[required], select[required]');
-        requiredInputs.forEach(input => {
-            const label = input.closest('.form-group').querySelector('.floating-label');
-            if (label && !label.querySelector('.required')) {
-                const asterisk = document.createElement('span');
-                asterisk.className = 'required';
-                asterisk.textContent = '*';
-                label.appendChild(asterisk);
-            }
-        });
-
-        // Adicionar asterisco ao select se ainda não estiver presente
-        const selectLabel = document.querySelector('.custom-select-wrapper .floating-label');
-        if (selectLabel && !selectLabel.querySelector('.required')) {
-            const asterisk = document.createElement('span');
-            asterisk.className = 'required';
-            asterisk.textContent = '*';
-            selectLabel.appendChild(asterisk);
-        }
-    }
-
-    // Chamar a função para adicionar os asteriscos
-    addRequiredAsterisks();
-});
+    });
+}
 
 const senhaInput = document.getElementById('senha');
 const confirmarSenhaInput = document.getElementById('confirmar_senha');
@@ -379,21 +448,72 @@ confirmarSenhaInput.setAttribute('maxlength', '5');
 confirmarSenhaInput.setAttribute('inputmode', 'numeric');
 confirmarSenhaInput.setAttribute('pattern', '[0-9]{5}');
 
-// Funcionalidade para mostrar/ocultar senha
-const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+function setupInputMasks() {
+    const cnpjInput = document.getElementById('cnpj');
+    const cpfInput = document.getElementById('cpf');
+    const telefoneInput = document.getElementById('telefone');
 
-togglePasswordButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const input = this.previousElementSibling.previousElementSibling;
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
-        
-        // Altera o ícone do olho
-        const eyeIcon = this.querySelector('.eye-icon');
-        if (type === 'password') {
-            eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-        } else {
-            eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+    if (cnpjInput) {
+        VMasker(cnpjInput).maskPattern('99.999.999/9999-99');
+    }
+
+    if (cpfInput) {
+        VMasker(cpfInput).maskPattern('999.999.999-99');
+    }
+
+    if (telefoneInput) {
+        VMasker(telefoneInput).maskPattern('(99) 9 9999-9999');
+    }
+}
+
+function setupCNPJSearch() {
+    const cnpjInput = document.getElementById('cnpj');
+    const cnpjSearchButton = document.querySelector('.cnpj-search-button');
+
+    if (cnpjInput && cnpjSearchButton) {
+        cnpjSearchButton.addEventListener('click', searchCNPJ);
+    }
+}
+
+async function searchCNPJ() {
+    const cnpjInput = document.getElementById('cnpj');
+    const cnpj = cnpjInput.value.replace(/\D/g, '');
+    if (cnpj.length !== 14) {
+        alert('Por favor, insira um CNPJ válido.');
+        return;
+    }
+
+    const cnpjSearchButton = document.querySelector('.cnpj-search-button');
+    cnpjSearchButton.classList.add('loading');
+
+    try {
+        const response = await fetch(`https://publica.cnpj.ws/cnpj/${cnpj}`);
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
         }
+
+        document.getElementById('razao_social').value = data.razao_social;
+        document.getElementById('nome_fantasia').value = data.estabelecimento.nome_fantasia || '';
+        
+        const telefone = (data.estabelecimento.ddd1 || '') + (data.estabelecimento.telefone1 || '');
+        document.getElementById('telefone').value = telefone;
+        
+        document.getElementById('email').value = data.estabelecimento.email || '';
+
+        updateFloatingLabels();
+    } catch (error) {
+        alert('Erro ao buscar CNPJ: ' + error.message);
+    } finally {
+        cnpjSearchButton.classList.remove('loading');
+    }
+}
+
+function updateFloatingLabels() {
+    const floatingInputs = document.querySelectorAll('.floating-input input');
+    floatingInputs.forEach(input => {
+        const inputContainer = input.closest('.floating-input');
+        inputContainer.classList.toggle('filled', input.value !== '');
     });
-});
+}
