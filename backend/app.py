@@ -1,24 +1,6 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
-from flask_jwt_extended import JWTManager
-from flask_cors import CORS  # Importe o CORS
-from config import Config
+from app import create_app
 
-app = Flask(__name__)
-app.config.from_object(Config)
-
-# Adicione esta linha para habilitar CORS para todas as rotas
-CORS(app)
-
-db = SQLAlchemy(app)
-mail = Mail(app)
-jwt = JWTManager(app)
-
-# Importar e registrar blueprints (rotas) aqui
-
-from api.rotas_empresa import bp as rotas_empresa
-app.register_blueprint(rotas_empresa, url_prefix='/api/empresa')
+app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(ssl_context='adhoc', host='0.0.0.0', port=5000)

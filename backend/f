@@ -1,0 +1,14 @@
+[0;1;31m×[0m nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (]8;;file://iafood/usr/lib/systemd/system/nginx.service/usr/lib/systemd/system/nginx.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Tue 2024-10-08 20:30:04 UTC; 23s ago
+   Duration: 3min 6.879s
+       Docs: ]8;;man:nginx(8)man:nginx(8)]8;;
+    Process: 231758 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; [0;1;31m(code=exited, status=1/FAILURE)[0m
+        CPU: 7ms
+
+Oct 08 20:30:04 iafood systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server...
+Oct 08 20:30:04 iafood nginx[231758]: 2024/10/08 20:30:04 [emerg] 231758#231758: cannot load certificate "/etc/letsencrypt/live/aifud.com.br/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/aifud.com.br/fullchain.pem, r) error:10000080:BIO routines::no such file)
+Oct 08 20:30:04 iafood nginx[231758]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Oct 08 20:30:04 iafood systemd[1]: [0;1;39m[0;1;31m[0;1;39mnginx.service: Control process exited, code=exited, status=1/FAILURE[0m
+Oct 08 20:30:04 iafood systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mnginx.service: Failed with result 'exit-code'.[0m
+Oct 08 20:30:04 iafood systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start nginx.service - A high performance web server and a reverse proxy server.[0m

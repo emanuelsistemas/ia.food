@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="style/cadastro_empresa.css">
 </head>
 <body>
-    <h1 class="logo">aifüd</h1>
+    <h1 class="logo">
+        aifüd
+        <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M17 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </h1>
     <div class="container">
         <h2 class="form-title">Cadastro de empresa</h2>
         <form id="cadastroEmpresaForm">
@@ -174,12 +180,12 @@
             };
 
             $.ajax({
-                url: '/api/empresa/cadastrar',
+                url: 'http://localhost:5000/empresas/',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),
                 success: function(response) {
-                    alert('Empresa cadastrada com sucesso!');
+                    alert('Empresa cadastrada com sucesso! Código AIFUD: ' + response.empresa.codigo_aifud);
                     // Limpar formulário ou redirecionar
                 },
                 error: function(xhr, status, error) {

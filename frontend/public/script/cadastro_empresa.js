@@ -517,3 +517,43 @@ function updateFloatingLabels() {
         inputContainer.classList.toggle('filled', input.value !== '');
     });
 }
+
+function submitForm(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    var formData = {
+        segmento: $('#segmento').val(),
+        documento: $('input[name="documento"]:checked').val(),
+        cnpj: $('#cnpj').val(),
+        cpf: $('#cpf').val(),
+        razao_social: $('#razao_social').val(),
+        nome_fantasia: $('#nome_fantasia').val(),
+        telefone: $('#telefone').val(),
+        email: $('#email').val(),
+        nome_usuario: $('#nome_usuario').val(),
+        senha: $('#senha').val()
+    };
+
+    $.ajax({
+        url: 'http://localhost:5000/empresas/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(formData),
+        success: function(response) {
+            alert('Empresa cadastrada com sucesso! Código AIFUD: ' + response.empresa.codigo_aifud);
+            // Limpar formulário ou redirecionar
+        },
+        error: function(xhr, status, error) {
+            alert('Erro ao cadastrar empresa: ' + error);
+        }
+    });
+}
+
+$(document).ready(function() {
+    $('#cadastroEmpresaForm').on('submit', function(e) {
+        e.preventDefault();
+        submitForm();
+    });
+});

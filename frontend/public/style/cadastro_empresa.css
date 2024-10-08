@@ -13,12 +13,23 @@ body {
 }
 
 .logo {
-    font-family: 'MuseoModerno', cursive;
-    text-align: center;
-    font-size: 4rem;
-    font-weight: 400;
-    margin-top: 1rem; /* Adicionado para igualar o espaço acima e abaixo do logo */
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    font-family: 'MuseoModerno', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #333;
+}
+
+.logo-icon {
+    margin-left: 8px;
+    width: 24px;
+    height: 24px;
+}
+
+.logo-icon rect,
+.logo-icon path {
+    stroke: currentColor;
 }
 
 .container {
