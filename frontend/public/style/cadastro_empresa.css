@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:wght@300;400;500;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'MuseoModerno', Arial, sans-serif;
     background-color: #141414; /* Alterado de #1e1e1e para #141414 */
     color: #ffffff;
     margin: 0;
@@ -12,24 +14,30 @@ body {
     padding-bottom: 2rem; /* Adiciona padding na parte inferior do body */
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Espaço entre o logo e o ícone */
+}
+
 .logo {
     display: flex;
     align-items: center;
-    font-family: 'MuseoModerno', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    color: #333;
+    font-family: 'MuseoModerno', Arial, sans-serif;
+    font-size: 32px; /* Aumentado de 24px para 32px */
+    font-weight: 700; /* Alterado para bold */
+}
+
+.logo-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-icon {
-    margin-left: 8px;
-    width: 24px;
-    height: 24px;
-}
-
-.logo-icon rect,
-.logo-icon path {
-    stroke: currentColor;
+    width: 32px; /* Ajuste conforme necessário */
+    height: 32px; /* Ajuste conforme necessário */
+    color: #007bff; /* Ou a cor que você preferir */
 }
 
 .container {
@@ -42,7 +50,7 @@ body {
 }
 
 .form-title {
-    font-family: Arial, sans-serif;
+    font-family: 'MuseoModerno', Arial, sans-serif;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 1.5rem;
